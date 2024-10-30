@@ -23,7 +23,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_val = scaler.transform(X_val)
 
-# Step 4: Initialize Gradient Boosting Regressor
+# Initialize Gradient Boosting Regressor
 gbr = GradientBoostingRegressor(
     n_estimators=604,
     learning_rate=0.0321,
@@ -35,13 +35,13 @@ gbr = GradientBoostingRegressor(
     random_state=42
 )
 
-# Step 5: Fit the model on the scaled training data
+# Fit the model on the scaled training data
 gbr.fit(X_train, y_train)
 
-# Step 6: Make predictions on the validation set
+# Make predictions on the validation set
 gbr_pred_val = gbr.predict(X_val)
 
-# Step 7: Calculate and print the Mean Absolute Error (MAE)
+# Calculate and print the Mean Absolute Error (MAE)
 mae_gbr = mean_absolute_error(y_val, gbr_pred_val)
 print(f"Mean Absolute Error with Gradient Boosting: {mae_gbr}")
 
