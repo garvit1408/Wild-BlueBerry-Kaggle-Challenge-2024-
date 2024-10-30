@@ -7,30 +7,43 @@
 This repository contains my solution for a Kaggle competition aimed at predicting wild blueberry yield. Competing as a solo participant, I achieved a Mean Absolute Error (MAE) of **255.22**, securing a spot in the top **12%** of 180 teams.
 
 ## 🏆 Challenge Overview
-The objective was to develop a regression model that could accurately forecast blueberry yields using classical ML techniques. Deep learning models were not allowed, with an emphasis on leveraging ensemble methods and traditional ML models.
+The objective was to develop a regression model to forecast blueberry yields using classical ML techniques, with a restriction against deep learning models.
 
 ## 📊 Dataset Description
-The dataset is based on the **Wild Blueberry Pollination Simulation Model**, a validated simulation tool backed by over 30 years of observational data from Maine, USA, and Canadian Maritimes. The features capture various factors affecting pollination efficiency and yield, including:
+The dataset is based on the **Wild Blueberry Pollination Simulation Model**, which captures how variables such as bee densities, temperatures, and rainfall influence yield. Key features include:
 
 - **Clonesize**: Average blueberry clone size (m²)
-- **Honeybee, Bumblebee, Andrena, Osmia**: Densities of various bee species (bees/m²/min)
-- **Temperature Features**: Maximum, minimum, and average daily air temperatures during blooming season (°C)
-- **Rainfall Features**: Number of rainy days and average raining days during blooming season
+- **Bee Density (Honeybee, Bumblebee, Andrena, Osmia)**: Densities of different bee species (bees/m²/min)
+- **Temperature**: Maximum, minimum, and average daily air temperatures during blooming season (°C)
+- **Rainfall**: Rainy days and average rainy days during blooming season
 
-The **train** and **test** sets were provided, with leaderboard rankings based on Mean Absolute Error (MAE).
+The **train** and **test** sets were provided, with leaderboard evaluation based on Mean Absolute Error (MAE).
 
 ## 🧩 Solution Approach
 
-Given the classical ML constraint, my approach included:
+### 1. Data Preparation
+- **Feature Selection**: Excluded non-predictive columns (`id`, `Row#`) and set the yield column as the target.
+- **Data Split**: Used a 90-10 split for training and validation.
+- **Scaling**: Standardized features using `StandardScaler`.
 
-1. **Exploratory Data Analysis (EDA)**: Investigated feature distributions, correlations, and applied feature engineering.
-2. **Feature Selection**: Selected features based on correlations and importance to improve predictive accuracy.
-3. **Model Selection**: Tested several classical ML models:
-   - **Linear Regression**
-   - **Random Forest Regressor**
-   - **Gradient Boosting Regressor**
-4. **Ensembling**: Combined models using ensemble methods to enhance performance.
-5. **Hyperparameter Tuning**: Applied grid search and cross-validation to fine-tune the parameters, optimizing for MAE.
+### 2. Model Selection
+Chosen Model: **Gradient Boosting Regressor** due to its robustness in handling structured data and its feature importance capabilities. Model hyperparameters were fine-tuned based on validation performance.
+
+### 3. Model Training and Evaluation
+The model was initialized and trained with the following parameters:
+
+```python
+GradientBoostingRegressor(
+    n_estimators=604,
+    learning_rate=0.0321,
+    max_depth=6,
+    min_samples_split=4,
+    min_samples_leaf=5,
+    subsample=0.8,
+    loss='absolute_error',
+    random_state=42
+)
+```
 
 ## 🚀 Results
 - **MAE**: 255.22
@@ -39,10 +52,3 @@ Given the classical ML constraint, my approach included:
 ## 🔧 Libraries and Tools
 - Python 3.x
 - Key Libraries: `scikit-learn`, `pandas`, `numpy`, `matplotlib`, `seaborn`
-
-## 📂 Repository Structure
-```plaintext
-├── notebooks/               # Jupyter notebooks for EDA and modeling
-├── src/                     # Source code for preprocessing and model training
-├── data/                    # Placeholder for dataset (not included due to Kaggle terms)
-├── README.md                # Project overview
